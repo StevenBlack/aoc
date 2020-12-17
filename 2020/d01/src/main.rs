@@ -1,5 +1,5 @@
 fn main() {
-    let v1: Vec<usize> = vec![
+    let v: Vec<usize> = vec![
         2004,
         1867,
         1923,
@@ -201,15 +201,28 @@ fn main() {
         1799,
         1532,
     ];
-    let v2 = v1.clone();
 
-    for a in &v1 {
-        for b in &v2 {
+    // part one
+    'outer1: for a in &v {
+        for b in &v {
             if a + b == 2020 {
                 println!("{} * {} = {}", a, b, a * b);
                 // 543 * 1477 = 802011
-                break;
+                break 'outer1;
             }
         }
     }
+    // part two
+    'outer2: for a in &v {
+        for b in &v {
+            for c in &v {
+                if a + b + c == 2020 {
+                    println!("{} * {} * {} = {}", a, b, c, a * b * c);
+                    // 543 * 1477 = 802011
+                    break 'outer2;
+                }
+            }
+        }
+    }
+
 }

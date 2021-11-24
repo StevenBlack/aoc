@@ -73,6 +73,7 @@ fn main() {
         println!("vec.len() = {:?}", my_vec.len());
         println!("vec[0] is {:?}", my_vec.iter().next().unwrap());
         println!("vec[0..3] is {:?}", my_vec[0..3].to_vec());
+        println!("");
     }
     {
         let my_vec = file_to_vec_of_char_vec("input.txt".to_string());
@@ -81,5 +82,15 @@ fn main() {
         println!("vec.len() = {:?}", my_vec.len());
         println!("vec[0] is {:?}", my_vec.iter().next().unwrap());
         println!("vec[0..3] is {:?}", my_vec[0..3].to_vec());
+        println!("");
+    }
+    {
+        let my_vec = file_to_vec_of_words_vec("input2.txt".to_string());
+        println!("file_to_vec_of_words_vec");
+        println!("========================");
+        println!("vec.len() = {:?}", my_vec.len());
+        println!("vec[0] is {:?}", my_vec.iter().next().unwrap());
+        println!("vec[0..3] is {:?}", my_vec[0..3].to_vec());
+        println!("");
     }
 }

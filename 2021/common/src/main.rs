@@ -14,7 +14,6 @@ pub fn file_to_vec(filename: String) -> io::Result<Vec<String>> {
     Ok(file_reader.lines().filter_map(io::Result::ok).collect())
 }
 
-
 // read a file into Vec<Vec<char>>
 pub fn file_to_vec_of_char_vec(filename: String) -> Vec<Vec<char>> {
     let readresult = file_to_vec(filename);
@@ -24,6 +23,17 @@ pub fn file_to_vec_of_char_vec(filename: String) -> Vec<Vec<char>> {
     };
     readvec.iter().map(|l| l.chars().collect()).collect()
 }
+
+// read a file into Vec<Vec<String>>
+pub fn file_to_vec_of_words_vec(filename: String) -> Vec<Vec<char>> {
+    let readresult = file_to_vec(filename);
+    let readvec = match readresult {
+        Ok(file) => file,
+        Err(error) => panic!("Problem opening the file: {:?}", error),
+    };
+    readvec.iter().map(|l| l.chars().collect()).collect()
+}
+
 
 #[cfg(test)]
 mod tests {

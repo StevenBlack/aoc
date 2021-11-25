@@ -25,15 +25,18 @@ pub fn file_to_vec_of_char_vec(filename: String) -> Vec<Vec<char>> {
 }
 
 // read a file into Vec<Vec<String>>
-pub fn file_to_vec_of_words_vec(filename: String) -> Vec<Vec<char>> {
+pub fn file_to_vec_of_words_vec(filename: String) -> Vec<Vec<String>> {
+    // let v:Vec<&str> = "Hello, world!".split_whitespace().collect();
+    // let v:Vec<String> = "Hello, world! I'm having a great day, you?".split_whitespace().map(|w| w.to_string()).collect();
+
     let readresult = file_to_vec(filename);
     let readvec = match readresult {
         Ok(file) => file,
         Err(error) => panic!("Problem opening the file: {:?}", error),
     };
-    readvec.iter().map(|l| l.chars().collect()).collect()
+    let vecvec :Vec<Vec<String>> = readvec.iter().map(|l| l.split_whitespace().map(|l| l.to_string()).collect()).collect();
+    vecvec
 }
-
 
 #[cfg(test)]
 mod tests {
@@ -50,6 +53,13 @@ mod tests {
         let my_vec = file_to_vec_of_char_vec("input.txt".to_string());
         assert!(my_vec.len() > 0);
     }
+
+    #[test]
+    fn input_readable_by_file_to_vec_of_words_vec() {
+        let my_vec = file_to_vec_of_words_vec("input2.txt".to_string());
+        assert!(my_vec.len() > 0);
+    }
+
 
     #[test]
     #[should_panic]

@@ -24,11 +24,10 @@ pub fn file_to_vec_of_char_vec(filename: String) -> Vec<Vec<char>> {
     readvec.iter().map(|l| l.chars().collect()).collect()
 }
 
-// read a file into Vec<Vec<String>>
+// read a file into Vec<Vec<String>> (words)
 pub fn file_to_vec_of_words_vec(filename: String) -> Vec<Vec<String>> {
     // let v:Vec<&str> = "Hello, world!".split_whitespace().collect();
     // let v:Vec<String> = "Hello, world! I'm having a great day, you?".split_whitespace().map(|w| w.to_string()).collect();
-
     let readresult = file_to_vec(filename);
     let readvec = match readresult {
         Ok(file) => file,
@@ -59,7 +58,6 @@ mod tests {
         let my_vec = file_to_vec_of_words_vec("input2.txt".to_string());
         assert!(my_vec.len() > 0);
     }
-
 
     #[test]
     #[should_panic]

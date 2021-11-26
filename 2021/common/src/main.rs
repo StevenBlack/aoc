@@ -16,6 +16,10 @@ pub fn file_to_string(filename: String) -> String {
     contents
 }
 
+pub fn string_to_vec(param: String) -> Vec<String> {
+    param.lines().map(|l| l.to_string()).collect()
+}
+
 // read a file into Result<Vec<String>>
 pub fn file_to_vec(filename: String) -> io::Result<Vec<String>> {
     if fs::metadata(filename.clone()).is_err() {
@@ -63,6 +67,21 @@ mod tests {
     #[should_panic]
     fn bad_input_file_to_string() {
        let _ = file_to_string("badinput.txt".to_string());
+    }
+
+    #[test]
+    fn convert_strin_to_vec() {
+        let my_string = file_to_string("input2.txt".to_string());
+        let my_vec=string_to_vec(my_string);
+        assert!(my_vec.len() > 0);
+    }
+
+    #[test]
+    #[should_panic]
+    fn convert_strin_to_vec_panic() {
+        let my_string = file_to_string("badinput.txt".to_string());
+        let my_vec=string_to_vec(my_string);
+        assert!(my_vec.len() > 0);
     }
 
     #[test]

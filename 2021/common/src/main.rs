@@ -3,6 +3,18 @@ use std::io::BufReader;
 use std::io::BufRead;
 use std::io;
 use std::fs;
+// use std::str;
+
+// read a file to string
+use std::io::prelude::*;
+use std::fs::File;
+
+pub fn file_to_string(filename: String) -> String {
+    let mut file = File::open(filename).expect("Unable to open the file");
+    let mut contents = String::new();
+    file.read_to_string(&mut contents).expect("Unable to read the file");
+    contents
+}
 
 // read a file into Result<Vec<String>>
 pub fn file_to_vec(filename: String) -> io::Result<Vec<String>> {
@@ -42,6 +54,18 @@ mod tests {
     use super::*;
 
     #[test]
+    fn input_readable_by_file_to_string() {
+        let mystring = file_to_string("input2.txt".to_string());
+        assert!(mystring.len() > 0);
+    }
+
+    #[test]
+    #[should_panic]
+    fn bad_input_file_to_string() {
+       let _ = file_to_string("badinput.txt".to_string());
+    }
+
+    #[test]
     fn input_readable_by_file_to_vec() {
         let my_vec = file_to_vec("input.txt".to_string()).unwrap();
         assert!(my_vec.len() > 0);
@@ -74,6 +98,13 @@ mod tests {
 
 // just for fun
 fn main() {
+    {
+        let my_string = file_to_string("input2.txt".to_string());
+        println!("file_to_string");
+        println!("==============");
+        println!("vec.len() = {:?}", my_string.len());
+        println!("");
+    }
     {
         let my_vec = file_to_vec("input.txt".to_string()).unwrap();
         println!("file_to_vec");

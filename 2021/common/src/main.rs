@@ -20,6 +20,10 @@ pub fn string_to_vec(param: String) -> Vec<String> {
     param.lines().map(|l| l.to_string()).collect()
 }
 
+pub fn string_split_to_vec(param: String, splt: String) -> Vec<String> {
+    param.split(splt.as_str()).map(|l| l.to_string()).collect()
+}
+
 // read a file into Result<Vec<String>>
 pub fn file_to_vec(filename: String) -> io::Result<Vec<String>> {
     if fs::metadata(filename.clone()).is_err() {
@@ -73,6 +77,13 @@ mod tests {
     fn convert_strin_to_vec() {
         let my_string = file_to_string("input2.txt".to_string());
         let my_vec=string_to_vec(my_string);
+        assert!(my_vec.len() > 0);
+    }
+
+    #[test]
+    fn convert_string_split_to_vec() {
+        let my_string = file_to_string("input2.txt".to_string());
+        let my_vec=string_split_to_vec(my_string, 'r'.to_string());
         assert!(my_vec.len() > 0);
     }
 
@@ -149,6 +160,17 @@ fn main() {
         println!("vec.len() = {:?}", my_vec.len());
         println!("vec[0] is {:?}", my_vec.iter().next().unwrap());
         println!("vec[0..3] is {:?}", my_vec[0..3].to_vec());
+        println!("");
+    }
+    {
+        let my_string = file_to_string("input2.txt".to_string());
+        let my_vec = string_split_to_vec(my_string, "r".to_owned());
+
+        println!("string_split_to_vec");
+        println!("===================");
+        println!("vec.len() = {:?}", my_vec.len());
+        println!("vec[0] is {:?}", my_vec.iter().next());
+        println!("vec[0..10] is {:?}", my_vec[0..3].to_vec());
         println!("");
     }
 }

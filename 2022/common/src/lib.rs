@@ -7,7 +7,6 @@ use std::io;
 use std::fs;
 use std::io::prelude::*;
 use std::fs::File;
-
 // find the max and min of a vector of numbers
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub struct MaxMin<T> {

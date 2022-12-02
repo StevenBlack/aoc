@@ -92,7 +92,6 @@ fn day() {
     let topelf = find_max_min(&cals).max;
 
     println!("Top elf is #{:?} with {} calories.", topelf.1 + 1, topelf.0);
-    cals.sort();
-    let clen = cals.len();
-    println!("Top three elves total {:?}.", cals[clen-1] + cals[clen-2] + cals[clen-3]);
+    cals.sort_by(|a, b| b.cmp(a));
+    println!("Top three elves total {:?}.", cals.iter().take(3).sum::<u32>());
 }

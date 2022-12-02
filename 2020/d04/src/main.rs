@@ -1,3 +1,4 @@
+#![crate_name = "d04"]
 use std::collections::HashMap;
 use std::io::BufReader;
 use std::io::BufRead;

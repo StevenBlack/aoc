@@ -1,3 +1,4 @@
+#![crate_name = "d03"]
 use std::io::BufReader;
 use std::io::BufRead;
 use std::io;

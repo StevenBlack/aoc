@@ -1,3 +1,5 @@
+#![crate_name = "d01"]
+
 fn main() {
     let v: Vec<usize> = vec![
         2004,

@@ -85,15 +85,6 @@ pub fn file_to_vec_of_words_vec(filename: String) -> Vec<Vec<String>> {
     vecvec
 }
 
-#[allow(dead_code)]
-pub fn str_to_set(s: &str) -> byte_set::ByteSet {
-  let mut set = ByteSet::new();
-  for b in s.as_bytes() {
-      set.insert(*b);
-  }
-  set
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -113,11 +104,4 @@ mod tests {
         let myvec = super::string_to_vec("line 1\nLine 2".to_string());
         assert!(myvec.len() == 2);
     }
-
-    #[test]
-    fn check_str_to_set() {
-        println!("{:?}", str_to_set("abcde"));
-        dbg!(str_to_set("abcde"));
-    }
-
   }

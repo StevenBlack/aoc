@@ -1,6 +1,5 @@
 // common utils to support AOC puzzles
 
-use byte_set::ByteSet;
 use std::io::BufReader;
 use std::io::BufRead;
 use std::io;

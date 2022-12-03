@@ -36,3 +36,11 @@ dependencies = [
  "byte_set",
  "common",
 ]
+
+[[package]]
+name = "d04"
+version = "0.1.0"
+dependencies = [
+ "byte_set",
+ "common",
+]

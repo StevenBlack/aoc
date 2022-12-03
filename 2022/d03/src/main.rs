@@ -5,14 +5,14 @@ use std::collections::HashSet;
 
 fn main() {
     println!("Advent of code 2022 day 3");
-    day();
-    day2();
+    one();
+    two();
 }
 
-fn day() {
+fn one() {
     let input = file_to_string("input.txt".to_string());
-    let mut vec = string_split_to_vec(input, "\n".to_string());
-    vec.retain(|x| !x.is_empty());
+    //  let mut vec = string_split_to_vec(input, "\n".to_string());
+    let vec = input.lines().collect::<Vec<&str>>();
     let mut splits = vec!();
     for s in vec {
         let (first, second) = s.split_at(s.len()/2);
@@ -41,12 +41,11 @@ fn day() {
     println!("Part 1 result: {}", splits.iter().sum::<i32>());
 }
 
-fn day2() {
+fn two() {
     let input = file_to_string("input.txt".to_string());
-    let mut vec = string_split_to_vec(input, "\n".to_string());
-    vec.retain(|x| !x.is_empty());
+    let vec = input.lines().collect::<Vec<&str>>();
     let mut splits = vec!();
-    let groups: Vec<&[String]> = vec.chunks(3).collect();
+    let groups: Vec<&[&str]> = vec.chunks(3).collect();
     for group in groups {
         let mut set = HashSet::new();
         let mut set2 = HashSet::new();
@@ -77,6 +76,3 @@ fn day2() {
     }
     println!("Part 2 result: {}", splits.iter().sum::<i32>());
 }
-
-
-

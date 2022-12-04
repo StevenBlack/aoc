@@ -8,3 +8,4 @@ edition = "2021"
 [dependencies]
 byte_set = "0.1.3"
 common = { path = "../common" }
+range-ext = "0.1.3"

@@ -24,7 +24,7 @@ mod tests {
     #[test]
     fn convert_strin_to_vec() {
         let my_string = common::file_to_string("input2.txt".to_string());
-        let my_vec= common::string_to_vec(my_string);
+        let my_vec = common::string_to_vec(my_string);
         assert!(my_vec.len() > 0);
     }
 

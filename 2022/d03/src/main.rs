@@ -75,92 +75,95 @@
 //!
 //! Both parts of this puzzle are complete! They provide two gold stars: **
 //!
-use std::fs;
 use byte_set::ByteSet;
+use std::fs;
 
 fn main() {
-  println!("Advent of code 2022 day 3");
-  let input = read_input("input.txt");
+    println!("Advent of code 2022 day 3");
+    let input = read_input("input.txt");
 
-  let part_one = one(input.clone());
-  println!("Part 1 result: {}", part_one);
+    let part_one = one(input.clone());
+    println!("Part 1 result: {}", part_one);
 
-  let part_two= two(input);
-  println!("Part 2 result: {}", part_two);
+    let part_two = two(input);
+    println!("Part 2 result: {}", part_two);
 }
 
 fn one(input: String) -> u32 {
-  let vec = input.lines().collect::<Vec<&str>>();
-  let mut splits = vec!();
-  for s in vec {
-    let (first, second) = s.split_at(s.len()/2);
-    // let set = str_to_set(first);
-    let set = ByteSet::from(first);
-    let mut ret: i32 = 0;
-    for byte in second.as_bytes() {
-      if set.contains(byte.to_owned()) {
-          ret = byte.to_owned() as i32;
-          break
-      }
+    let vec = input.lines().collect::<Vec<&str>>();
+    let mut splits = vec![];
+    for s in vec {
+        let (first, second) = s.split_at(s.len() / 2);
+        // let set = str_to_set(first);
+        let set = ByteSet::from(first);
+        let mut ret: i32 = 0;
+        for byte in second.as_bytes() {
+            if set.contains(byte.to_owned()) {
+                ret = byte.to_owned() as i32;
+                break;
+            }
+        }
+        splits.push(score(ret as u32));
     }
-    splits.push(score(ret as u32));
-  }
-  splits.iter().sum::<u32>()
+    splits.iter().sum::<u32>()
 }
 
 fn two(input: String) -> u32 {
-  let vec = input.lines().collect::<Vec<&str>>();
-  let mut splits = vec!();
-  let groups: Vec<&[&str]> = vec.chunks(3).collect();
-  for group in groups {
-    let ret = ByteSet::from(group[0])
-      .intersection(ByteSet::from(group[1]))
-      .intersection(ByteSet::from(group[2])).first().unwrap();
-    splits.push(score(ret as u32));
-  }
-  splits.iter().sum::<u32>()
+    let vec = input.lines().collect::<Vec<&str>>();
+    let mut splits = vec![];
+    let groups: Vec<&[&str]> = vec.chunks(3).collect();
+    for group in groups {
+        let ret = ByteSet::from(group[0])
+            .intersection(ByteSet::from(group[1]))
+            .intersection(ByteSet::from(group[2]))
+            .first()
+            .unwrap();
+        splits.push(score(ret as u32));
+    }
+    splits.iter().sum::<u32>()
 }
 
 fn score(mut s: u32) -> u32 {
-  if s >= 97 {
-    s = s - 96;
-  } else {
-    s = s - 38;
-  }
-  s
+    if s >= 97 {
+        s = s - 96;
+    } else {
+        s = s - 38;
+    }
+    s
 }
 
 pub fn read_input(filename: &str) -> String {
-  fs::read_to_string(filename)
-      .expect("failed to read file")
-      // .lines()
-      // // .map(|line: &str| line.parse::<usize>().expect("cannot parse a usize"))
-      // .collect()
+    fs::read_to_string(filename).expect("failed to read file")
+    // .lines()
+    // // .map(|line: &str| line.parse::<usize>().expect("cannot parse a usize"))
+    // .collect()
 }
 
 #[cfg(test)]
 mod tests {
-  use super::*;
-  #[test]
-  fn test_one() {
-    let input: String = "vJrwpWtwJgWrhcsFMMfFFhFp
+    use super::*;
+    #[test]
+    fn test_one() {
+        let input: String = "vJrwpWtwJgWrhcsFMMfFFhFp
 jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL
 PmmdzqPrVvPwwTWBwg
 wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn
 ttgJtRGJQctTZtZT
-CrZsJsPPZsGzwwsLwLmpwMDw".to_string();
+CrZsJsPPZsGzwwsLwLmpwMDw"
+            .to_string();
 
-    assert_eq!(one(input), 157);
-  }
+        assert_eq!(one(input), 157);
+    }
 
-#[test]
-  fn test_two() {
-    let input: String = "vJrwpWtwJgWrhcsFMMfFFhFp
+    #[test]
+    fn test_two() {
+        let input: String = "vJrwpWtwJgWrhcsFMMfFFhFp
 jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL
 PmmdzqPrVvPwwTWBwg
 wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn
 ttgJtRGJQctTZtZT
-CrZsJsPPZsGzwwsLwLmpwMDw".to_string();
-    assert_eq!(two(input), 70);
-  }
+CrZsJsPPZsGzwwsLwLmpwMDw"
+            .to_string();
+        assert_eq!(two(input), 70);
+    }
 }

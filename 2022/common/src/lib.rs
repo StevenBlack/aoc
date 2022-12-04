@@ -1,11 +1,11 @@
 // common utils to support AOC puzzles
 
-use std::io::BufReader;
-use std::io::BufRead;
-use std::io;
 use std::fs;
-use std::io::prelude::*;
 use std::fs::File;
+use std::io;
+use std::io::prelude::*;
+use std::io::BufRead;
+use std::io::BufReader;
 
 // find the max and min of a vector of numbers
 #[derive(Copy, Clone, Debug, PartialEq)]
@@ -23,11 +23,20 @@ pub fn find_max_min<T: std::cmp::PartialOrd + Copy>(slice: &[T]) -> MaxMin<T> {
     let mut min_pos: usize = 0;
 
     for index in 1..slice.len() {
-        if slice[index] < *min { min = &slice[index]; min_pos = index;}
-        if slice[index] > *max { max = &slice[index]; max_pos = index;}
+        if slice[index] < *min {
+            min = &slice[index];
+            min_pos = index;
+        }
+        if slice[index] > *max {
+            max = &slice[index];
+            max_pos = index;
+        }
     }
 
-    MaxMin{max: (*max, max_pos), min: (*min, min_pos)}
+    MaxMin {
+        max: (*max, max_pos),
+        min: (*min, min_pos),
+    }
 }
 
 // read a file to string
@@ -35,7 +44,8 @@ pub fn find_max_min<T: std::cmp::PartialOrd + Copy>(slice: &[T]) -> MaxMin<T> {
 pub fn file_to_string(filename: String) -> String {
     let mut file = File::open(filename).expect("Unable to open the file");
     let mut contents = String::new();
-    file.read_to_string(&mut contents).expect("Unable to read the file");
+    file.read_to_string(&mut contents)
+        .expect("Unable to read the file");
     contents
 }
 
@@ -73,11 +83,11 @@ pub fn file_to_vec_of_char_vec(filename: String) -> Vec<Vec<char>> {
 
 #[allow(dead_code)]
 fn file_to_vec_of_usize(filename: String) -> Vec<usize> {
-  fs::read_to_string(filename)
-      .expect("failed to read file")
-      .lines()
-      .map(|line: &str| line.parse::<usize>().expect("cannot parse a usize"))
-      .collect()
+    fs::read_to_string(filename)
+        .expect("failed to read file")
+        .lines()
+        .map(|line: &str| line.parse::<usize>().expect("cannot parse a usize"))
+        .collect()
 }
 
 // read a file into Vec<Vec<String>> (words)
@@ -90,7 +100,10 @@ pub fn file_to_vec_of_words_vec(filename: String) -> Vec<Vec<String>> {
         Ok(file) => file,
         Err(error) => panic!("Problem opening the file: {:?}", error),
     };
-    let vecvec :Vec<Vec<String>> = readvec.iter().map(|l| l.split_whitespace().map(|l| l.to_string()).collect()).collect();
+    let vecvec: Vec<Vec<String>> = readvec
+        .iter()
+        .map(|l| l.split_whitespace().map(|l| l.to_string()).collect())
+        .collect();
     vecvec
 }
 
@@ -113,4 +126,4 @@ mod tests {
         let myvec = super::string_to_vec("line 1\nLine 2".to_string());
         assert!(myvec.len() == 2);
     }
-  }
+}

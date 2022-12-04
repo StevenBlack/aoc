@@ -54,8 +54,7 @@
 //!
 //! Both parts of this puzzle are complete! They provide two gold stars: **
 
-
-fn score (round:&str) ->u32 {
+fn score(round: &str) -> u32 {
     match round {
         "A X" => 3 + 1,
         "A Y" => 6 + 2,
@@ -70,7 +69,7 @@ fn score (round:&str) ->u32 {
     }
 }
 
-fn score2 (round:&str) ->u32 {
+fn score2(round: &str) -> u32 {
     match round {
         "A X" => 0 + 3,
         "A Y" => 3 + 1,
@@ -85,7 +84,7 @@ fn score2 (round:&str) ->u32 {
     }
 }
 
-use common::{*};
+use common::*;
 
 fn main() {
     println!("Advent of code 2022 day 2");
@@ -96,11 +95,11 @@ fn main() {
 fn day() {
     let input = file_to_string("input.txt".to_string());
     let vec = string_split_to_vec(input, "\n".to_string());
-    println!("{}",vec.iter().map(|s| score(s)).sum::<u32>());
+    println!("{}", vec.iter().map(|s| score(s)).sum::<u32>());
 }
 
 fn day2() {
     let input = file_to_string("input.txt".to_string());
     let vec = string_split_to_vec(input, "\n".to_string());
-    println!("{}",vec.iter().map(|s| score2(s)).sum::<u32>());
+    println!("{}", vec.iter().map(|s| score2(s)).sum::<u32>());
 }

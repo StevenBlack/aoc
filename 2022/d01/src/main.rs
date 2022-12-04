@@ -57,7 +57,7 @@
 //!
 //! Your puzzle answer was `195292`.
 
-use common::{find_max_min, file_to_string, string_split_to_vec};
+use common::{file_to_string, find_max_min, string_split_to_vec};
 
 fn main() {
     day();
@@ -72,7 +72,7 @@ fn day() {
     let elves = string_split_to_vec(input, "\n\n".to_string());
 
     // the vec of calories for each elf.
-    let mut cals: Vec<u32> = vec!();
+    let mut cals: Vec<u32> = vec![];
 
     for elf in elves {
         let mut elfstrvec = elf.split("\n").collect::<Vec<&str>>();
@@ -80,12 +80,11 @@ fn day() {
         elfstrvec.retain(|&x| x.len() > 0);
         cals.push(
             elfstrvec
-            .iter()
-            .map(|s| s.parse::<u32>()
-            .unwrap())
-            .collect::<Vec<u32>>()
-            .iter()
-            .sum()
+                .iter()
+                .map(|s| s.parse::<u32>().unwrap())
+                .collect::<Vec<u32>>()
+                .iter()
+                .sum(),
         );
     }
 
@@ -93,5 +92,8 @@ fn day() {
 
     println!("Top elf is #{:?} with {} calories.", topelf.1 + 1, topelf.0);
     cals.sort_by(|a, b| b.cmp(a));
-    println!("Top three elves total {:?}.", cals.iter().take(3).sum::<u32>());
+    println!(
+        "Top three elves total {:?}.",
+        cals.iter().take(3).sum::<u32>()
+    );
 }

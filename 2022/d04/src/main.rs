@@ -1,28 +1,26 @@
 #![crate_name = "d04"]
+use common::*;
 use std::fs;
-use common::{*};
 
 fn main() {
     println!("Advent of code 2022 day 4");
     let part_one = one(read_input("input.txt"));
     println!("Part 1 result: {}", part_one);
 
-    let part_two= two(read_input("input.txt"));
+    let part_two = two(read_input("input.txt"));
     println!("Part 1 result: {}", part_two);
 }
 
 fn one(input: String) -> String {
-  input
+    input
 }
 
 fn two(input: String) -> String {
-  input
+    input
 }
 
-
 pub fn read_input(filename: &str) -> String {
-  fs::read_to_string(filename)
-      .expect("failed to read file")
+    fs::read_to_string(filename).expect("failed to read file")
 }
 
 // fn read_input(filename: &str) -> Vec<usize> {
@@ -35,17 +33,17 @@ pub fn read_input(filename: &str) -> String {
 
 #[cfg(test)]
 mod tests {
-  use super::*;
+    use super::*;
 
-  #[test]
-  fn test_one() {
-    let input: String = "".to_string();
-    // assert_eq!(one(input), 157);
-  }
+    #[test]
+    fn test_one() {
+        let input: String = "".to_string();
+        // assert_eq!(one(input), 157);
+    }
 
-#[test]
-  fn test_two() {
-    let input: String = "".to_string();
-    // assert_eq!(two(input), 70);
-  }
+    #[test]
+    fn test_two() {
+        let input: String = "".to_string();
+        // assert_eq!(two(input), 70);
+    }
 }

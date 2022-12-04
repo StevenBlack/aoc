@@ -71,6 +71,15 @@ pub fn file_to_vec_of_char_vec(filename: String) -> Vec<Vec<char>> {
     readvec.iter().map(|l| l.chars().collect()).collect()
 }
 
+#[allow(dead_code)]
+fn file_to_vec_of_usize(filename: String) -> Vec<usize> {
+  fs::read_to_string(filename)
+      .expect("failed to read file")
+      .lines()
+      .map(|line: &str| line.parse::<usize>().expect("cannot parse a usize"))
+      .collect()
+}
+
 // read a file into Vec<Vec<String>> (words)
 #[allow(dead_code)]
 pub fn file_to_vec_of_words_vec(filename: String) -> Vec<Vec<String>> {

@@ -125,9 +125,9 @@ fn two(input: String) -> u32 {
 
 fn score(mut s: u32) -> u32 {
     if s >= 97 {
-        s = s - 96;
+        s -= 96;
     } else {
-        s = s - 38;
+        s -= 38;
     }
     s
 }

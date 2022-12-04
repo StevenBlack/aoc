@@ -77,7 +77,7 @@ fn day() {
     for elf in elves {
         let mut elfstrvec = elf.split("\n").collect::<Vec<&str>>();
         // eliminate empty strings.
-        elfstrvec.retain(|&x| x.len() > 0);
+        elfstrvec.retain(|&x| !x.is_empty());
         cals.push(
             elfstrvec
                 .iter()

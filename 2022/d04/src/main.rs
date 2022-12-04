@@ -1,5 +1,4 @@
 #![crate_name = "d04"]
-use common::*;
 use std::fs;
 
 fn main() {

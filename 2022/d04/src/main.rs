@@ -23,10 +23,15 @@ fn two(input: String) -> String {
 pub fn read_input(filename: &str) -> String {
   fs::read_to_string(filename)
       .expect("failed to read file")
-      // .lines()
-      // // .map(|line: &str| line.parse::<usize>().expect("cannot parse a usize"))
-      // .collect()
 }
+
+// fn read_input(filename: &str) -> Vec<usize> {
+//   fs::read_to_string(filename)
+//       .expect("failed to read file")
+//       .lines()
+//       .map(|line: &str| line.parse::<usize>().expect("cannot parse a usize"))
+//       .collect()
+// }
 
 #[cfg(test)]
 mod tests {

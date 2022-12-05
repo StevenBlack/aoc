@@ -25,18 +25,18 @@ fn one(input: String) -> String {
     let mut inst = false;
 
     // resolve stacks
-    for thing in vecraw {
-        if thing.to_string().replace(" ", "") == "123" {
+    for inputline in vecraw {
+        if inputline.to_string().replace(" ", "") == "123" {
             continue;
         }
-        if thing.is_empty() {
+        if inputline.is_empty() {
             inst = true;
             continue;
         }
         if !inst {
-            vec.push(thing.to_owned());
+            vec.push(inputline.to_owned());
         } else {
-            instructions.push(thing.to_owned());
+            instructions.push(inputline.to_owned());
         }
     }
     let mut stacks: Vec<VecDeque<String>> = vec![VecDeque::new(); 9];
@@ -57,7 +57,6 @@ fn one(input: String) -> String {
     // proces instructions
     for inst in instructions {
         let words = inst.split(" ").collect::<Vec<&str>>();
-        // let (mv, fr, to) = (words[1].parse::usize>>(), words[3].parse::usize>>(), words[5].parse::usize>>().unwrap());
         let (mv, fr, to) = (
             words[1].parse::<usize>().unwrap(),
             words[3].parse::<usize>().unwrap(),
@@ -86,18 +85,18 @@ fn two(input: String) -> String {
     let mut inst = false;
 
     // resolve stacks
-    for thing in vecraw {
-        if thing.to_string().replace(" ", "") == "123" {
+    for inputline in vecraw {
+        if inputline.to_string().replace(" ", "") == "123" {
             continue;
         }
-        if thing.is_empty() {
+        if inputline.is_empty() {
             inst = true;
             continue;
         }
         if !inst {
-            vec.push(thing.to_owned());
+            vec.push(inputline.to_owned());
         } else {
-            instructions.push(thing.to_owned());
+            instructions.push(inputline.to_owned());
         }
     }
     let mut stacks: Vec<VecDeque<String>> = vec![VecDeque::new(); 9];

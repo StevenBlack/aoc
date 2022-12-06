@@ -22,21 +22,14 @@ fn one(input: &str, windowing_size: usize) -> usize {
     // let windowing_size = 4;
     let packets = String::from(input);
     let packets_slice = packets.chars().collect::<Vec<char>>();
-    let windows = packets_slice.windows(windowing_size);
-    let mut count = windowing_size;
-    for w in windows {
-        if w.len()
-            == w.into_iter()
-                .collect::<HashSet<_>>()
-                .into_iter()
-                .collect::<Vec<_>>()
-                .len()
-        {
-            break;
-        }
-        count += 1;
-    }
-    count
+    let sequence = packets_slice.windows(windowing_size)
+      .enumerate()
+      .find(|(_i, slice)| {
+          let set = slice.iter().collect::<HashSet<_>>();
+          slice.len() == set.len()
+      })
+    .unwrap();
+    sequence.0 + windowing_size
 }
 
 

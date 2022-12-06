@@ -19,33 +19,24 @@ fn main() {
 }
 
 fn one(input: String) -> String {
-    let vecraw = input.lines().collect::<Vec<&str>>();
-    let mut vec = vec![];
-    let mut instructions = vec![];
-    let mut inst = false;
+    let t = input.clone();
+    let raw = t.split("\n\n").collect::<Vec<&str>>();
 
-    // resolve stacks
-    for inputline in vecraw {
-        if inputline.to_string().replace(" ", "") == "123" {
-            continue;
-        }
-        if inputline.is_empty() {
-            inst = true;
-            continue;
-        }
-        if !inst {
-            vec.push(inputline.to_owned());
-        } else {
-            instructions.push(inputline.to_owned());
-        }
-    }
+    let mut vec = raw[0]
+        .split("\n")
+        .collect::<Vec<&str>>();
+    // remove the "1 2 3" line (stack numbers)
+    let _ = vec.pop();
+
+    let instructions = raw[1].split("\n").collect::<Vec<&str>>();
+
     let mut stacks: Vec<VecDeque<String>> = vec![VecDeque::new(); 9];
     for mut line in vec {
         let mut v = vec![];
         while !line.is_empty() {
             let (chunk, rest) = line.split_at(cmp::min(4, line.len()));
             v.push(chunk.trim().replace("[", "").replace("]", ""));
-            line = rest.to_string();
+            line = rest;
         }
         for (pos, e) in v.iter().enumerate() {
             if !e.is_empty() {
@@ -68,13 +59,13 @@ fn one(input: String) -> String {
         }
     }
 
-    let mut fin = "".to_owned();
-    for stack in stacks {
-        let foo = stack.get(0);
-        if foo.is_some() {
-            fin.push_str(foo.unwrap());
-        }
-    }
+    let fin = stacks.iter()
+        .map(|v| match v.front() {
+            Some(c) => c.to_string(),
+            None => "".to_string(),
+        })
+        .collect();
+
     fin
 }
 
@@ -132,13 +123,13 @@ fn two(input: String) -> String {
         }
     }
 
-    let mut fin = "".to_owned();
-    for stack in stacks {
-        let foo = stack.get(0);
-        if foo.is_some() {
-            fin.push_str(foo.unwrap());
-        }
-    }
+    let fin = stacks.iter()
+        .map(|v| match v.front() {
+            Some(c) => c.to_string(),
+            None => "".to_string(),
+        })
+        .collect();
+
     fin
 }
 

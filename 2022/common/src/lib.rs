@@ -39,6 +39,12 @@ pub fn find_max_min<T: std::cmp::PartialOrd + Copy>(slice: &[T]) -> MaxMin<T> {
     }
 }
 
+// converting a string to a slice
+#[allow(dead_code)]
+pub fn string_to_slice(input: String) -> Vec<char> {
+    input.chars().collect::<Vec<char>>()
+}
+
 // read a file to string
 #[allow(dead_code)]
 pub fn file_to_string(filename: String) -> String {

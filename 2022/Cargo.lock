@@ -65,6 +65,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "d07"
+version = "0.1.0"
+dependencies = [
+ "byte_set",
+ "common",
+ "range-ext",
+]
+
+[[package]]
 name = "hack"
 version = "0.1.0"
 dependencies = [

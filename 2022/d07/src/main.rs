@@ -6,7 +6,7 @@
 
 use common::file_to_string;
 use std::collections::VecDeque;
-use std::{cmp, fs};
+use std::{cmp, fs, default};
 
 fn main() {
     println!("Advent of code 2022 day 7");
@@ -18,119 +18,91 @@ fn main() {
     println!("Part 2 result: {}", part_two);
 }
 
-fn one(input: String) -> String {
-    let t = input.clone();
-    let raw = t.split("\n\n").collect::<Vec<&str>>();
-
-    let mut vec = raw[0]
-        .split("\n")
-        .collect::<Vec<&str>>();
-    // remove the "1 2 3" line (stack numbers)
-    let _ = vec.pop();
-
-    let instructions = raw[1].split("\n").collect::<Vec<&str>>();
-
-    let mut stacks: Vec<VecDeque<String>> = vec![VecDeque::new(); 9];
-    for mut line in vec {
-        let mut v = vec![];
-        while !line.is_empty() {
-            let (chunk, rest) = line.split_at(cmp::min(4, line.len()));
-            v.push(chunk.trim().replace("[", "").replace("]", ""));
-            line = rest;
-        }
-        for (pos, e) in v.iter().enumerate() {
-            if !e.is_empty() {
-                stacks[pos].push_back(e.to_owned());
-            }
-        }
-    }
-
-    // proces instructions
-    for inst in instructions {
-        let words = inst.split(" ").collect::<Vec<&str>>();
-        let (mv, fr, to) = (
-            words[1].parse::<usize>().unwrap(),
-            words[3].parse::<usize>().unwrap(),
-            words[5].parse::<usize>().unwrap(),
-        );
-        for _i in 1..=mv {
-            let mvd = stacks[fr - 1].pop_front().unwrap();
-            stacks[to - 1].push_front(mvd);
-        }
-    }
-
-    let fin = stacks.iter()
-        .map(|v| match v.front() {
-            Some(c) => c.to_string(),
-            None => "".to_string(),
-        })
-        .collect();
-
-    fin
+struct File {
+    pub name: String,
+    pub size: u32,
 }
 
-fn two(input: String) -> String {
-    let vecraw = input.lines().collect::<Vec<&str>>();
-    let mut vec = vec![];
-    let mut instructions = vec![];
-    let mut inst = false;
-
-    // resolve stacks
-    for inputline in vecraw {
-        if inputline.to_string().replace(" ", "") == "123" {
-            continue;
-        }
-        if inputline.is_empty() {
-            inst = true;
-            continue;
-        }
-        if !inst {
-            vec.push(inputline.to_owned());
-        } else {
-            instructions.push(inputline.to_owned());
+impl Default for File {
+    fn default() -> File {
+        File {
+          name: "x".to_string(),
+          size: 0,
         }
     }
-    let mut stacks: Vec<VecDeque<String>> = vec![VecDeque::new(); 9];
-    for mut line in vec {
-        let mut v = vec![];
-        while !line.is_empty() {
-            let (chunk, rest) = line.split_at(cmp::min(4, line.len()));
-            v.push(chunk.trim().replace("[", "").replace("]", ""));
-            line = rest.to_string();
-        }
-        for (pos, e) in v.iter().enumerate() {
-            if !e.is_empty() {
-                stacks[pos].push_back(e.to_owned());
-            }
+}
+
+struct Folder {
+    pub name: String,
+    pub files: Vec<File>,
+    pub folders: Vec<Folder>,
+}
+
+impl Default for Folder {
+    fn default() -> Folder {
+        Folder {
+          name: ".".to_string(),
+          files: vec!(),
+          folders: vec!(),
         }
     }
+}
 
-    // proces instructions
-    for inst in instructions {
-        let words = inst.split(" ").collect::<Vec<&str>>();
-        let (mv, fr, to) = (
-            words[1].parse::<usize>().unwrap(),
-            words[3].parse::<usize>().unwrap(),
-            words[5].parse::<usize>().unwrap(),
-        );
-        let mut hold = vec![];
-        for _i in 1..=mv {
-            let mvd = stacks[fr - 1].pop_front().unwrap();
-            hold.push(mvd);
-        }
-        while hold.len() > 0 {
-            stacks[to - 1].push_front(hold.pop().unwrap());
-        }
+impl Folder {
+    pub fn add_file(&mut self, f:File) {
+        self.files.push(f);
     }
+    pub fn add_folder(&mut self, f:Folder) {
+        self.folders.push(f);
+    }
+    pub fn get_size(&self) -> u32{
+        self.files
+            .iter()
+            .map(|f| f.size)
+            .sum::<u32>()
+            +
+            self.folders
+            .iter()
+            .map(|f| f.get_size())
+            .sum::<u32>()
+    }
+}
 
-    let fin = stacks.iter()
-        .map(|v| match v.front() {
-            Some(c) => c.to_string(),
-            None => "".to_string(),
-        })
-        .collect();
+#[test]
+fn test_this() {
+    let mut root = Folder { ..Default::default()};
+    let file = File { name: "x.txt".to_string(), size: 100 };
+    root.add_file(file);
+    assert_eq!(root.get_size(), 100);
+}
 
-    fin
+#[test]
+fn test_this_deeper() {
+    let mut root = Folder { ..Default::default()};
+    let mut current_folder = *root;
+    let mut sub = Folder { ..Default::default()};
+    let file1 = File { name: "x.txt".to_string(), size: 100 };
+    let file2 = File { name: "x.txt".to_string(), size: 100 };
+    let file3 = File { name: "x.txt".to_string(), size: 100 };
+    root.add_file(file1);
+    sub.add_file(file2);
+    sub.add_file(file3);
+    root.add_folder(sub);
+    assert_eq!(root.get_size(), 300);
+}
+
+fn one(input: String) -> u32 {
+    let raw = input.lines().collect::<Vec<&str>>();
+    let root = Folder { name: "/".to_string(), ..Default::default() };
+
+    100
+}
+
+fn two(input: String) -> u32 {
+    let raw = input.lines().collect::<Vec<&str>>();
+
+    100
+
 }
 
 pub fn read_input(filename: &str) -> String {
@@ -143,31 +115,59 @@ mod tests {
 
     #[test]
     fn test_one() {
-        let input: String = "    [D]
-[N] [C]
-[Z] [M] [P]
- 1   2   3
-
-move 1 from 2 to 1
-move 3 from 1 to 3
-move 2 from 2 to 1
-move 1 from 1 to 2"
+        let input: String = "$ cd /
+$ ls
+dir a
+14848514 b.txt
+8504156 c.dat
+dir d
+$ cd a
+$ ls
+dir e
+29116 f
+2557 g
+62596 h.lst
+$ cd e
+$ ls
+584 i
+$ cd ..
+$ cd ..
+$ cd d
+$ ls
+4060174 j
+8033020 d.log
+5626152 d.ext
+7214296 k"
             .to_string();
-        assert_eq!(one(input), "CMZ");
+        assert_eq!(one(input), 95437);
     }
 
     #[test]
+    #[ignore]
     fn test_two() {
-        let input: String = "    [D]
-[N] [C]
-[Z] [M] [P]
- 1   2   3
-
-move 1 from 2 to 1
-move 3 from 1 to 3
-move 2 from 2 to 1
-move 1 from 1 to 2"
-            .to_string();
-        assert_eq!(two(input), "MCD");
+        let input: String = "$ cd /
+$ ls
+dir a
+14848514 b.txt
+8504156 c.dat
+dir d
+$ cd a
+$ ls
+dir e
+29116 f
+2557 g
+62596 h.lst
+$ cd e
+$ ls
+584 i
+$ cd ..
+$ cd ..
+$ cd d
+$ ls
+4060174 j
+8033020 d.log
+5626152 d.ext
+7214296 k".to_string();
+        assert_eq!(two(input), 100);
     }
 }
